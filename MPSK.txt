@@ -1,0 +1,142 @@
+//Code to obtain the waterfall curve of M-ary PSK using Matlab
+
+
+clear;
+N=10^6 % number of bits or symbols
+rand('state',100); % initializing the rand() function
+randn('state',200); % initializing the randn() function
+% Transmitter
+ip = rand(1,N)>0.5; % generating 0,1 with equal probability
+ 
+s = 2*ip-1; % BPSK modulation 0 -> -1; 1 -> 1 
+n = 1/sqrt(2)*[randn(1,N) + j*randn(1,N)]; % white gaussian noise, 0dB variance 
+Eb_N0_dB = [-3:10]; % multiple Eb/N0 values
+ 
+for ii = 1:length(Eb_N0_dB)
+   % Noise addition
+   y = s + 10^(-Eb_N0_dB(ii)/20)*n; % additive white gaussian noise
+ 
+   % receiver - hard decision decoding
+   ipHat = real(y)>0;
+ 
+   % counting the errors
+   nErr(ii) = size(find([ip- ipHat]),2);
+ 
+end
+ 
+simBer = nErr/N; % simulated ber
+theoryBer = 0.5*erfc(sqrt(10.^(Eb_N0_dB/10))); % theoretical ber
+ 
+ 
+s1 = 4*ip-1; % QPSK modulation 0 -> -1; 1 -> 1 
+n= 1/sqrt(2)*[randn(1,N) + j*randn(1,N)]; % white gaussian noise, 0dB variance 
+Eb_N0_dB = [-3:10]; % multiple Eb/N0 values
+ 
+for ii = 1:length(Eb_N0_dB)
+   % Noise addition
+   y = s1 + 10^(-Eb_N0_dB(ii)/20)*n; % additive white gaussian noise
+ 
+   % receiver - hard decision decoding
+   ipHat = real(y)>0;
+ 
+   % counting the errors
+   nErr(ii) = size(find([ip- ipHat]),2);
+ 
+end
+ 
+simBer1 = nErr/N; % simulated ber
+ 
+ 
+s2 = 8*ip-1; % 8-PSK modulation 0 -> -1; 1 -> 1 
+n= 1/sqrt(2)*[randn(1,N) + j*randn(1,N)]; % white gaussian noise, 0dB variance 
+Eb_N0_dB = [-3:10]; % multiple Eb/N0 values
+ 
+for ii = 1:length(Eb_N0_dB)
+   % Noise addition
+   y = s2 + 10^(-Eb_N0_dB(ii)/20)*n; % additive white gaussian noise
+ 
+   % receiver - hard decision decoding
+   ipHat = real(y)>0;
+ 
+   % counting the errors
+   nErr(ii) = size(find([ip- ipHat]),2);
+ 
+end
+ 
+simBer2 = nErr/N; % simulated ber
+ 
+s3 = 16*ip-1; % 16-PSK modulation 0 -> -1; 1 -> 1 
+n= 1/sqrt(2)*[randn(1,N) + j*randn(1,N)]; % white gaussian noise, 0dB variance 
+Eb_N0_dB = [-3:10]; % multiple Eb/N0 values
+ 
+for ii = 1:length(Eb_N0_dB)
+   % Noise addition
+   y = s3 + 10^(-Eb_N0_dB(ii)/20)*n; % additive white gaussian noise
+ 
+   % receiver - hard decision decoding
+   ipHat = real(y)>0;
+ 
+   % counting the errors
+   nErr(ii) = size(find([ip- ipHat]),2);
+ 
+end
+ 
+simBer3 = nErr/N; % simulated ber
+ 
+s4 = 32*ip-1; % 32-PSK modulation 0 -> -1; 1 -> 1 
+n= 1/sqrt(2)*[randn(1,N) + j*randn(1,N)]; % white gaussian noise, 0dB variance 
+Eb_N0_dB = [-3:10]; % multiple Eb/N0 values
+ 
+for ii = 1:length(Eb_N0_dB)
+   % Noise addition
+   y = s4 + 10^(-Eb_N0_dB(ii)/20)*n; % additive white gaussian noise
+ 
+   % receiver - hard decision decoding
+   ipHat = real(y)>0;
+ 
+   % counting the errors
+   nErr(ii) = size(find([ip- ipHat]),2);
+ 
+end
+ 
+simBer4 = nErr/N; % simulated ber
+ 
+s5 = 64*ip-1; % 64-PSK modulation 0 -> -1; 1 -> 1 
+n= 1/sqrt(2)*[randn(1,N) + j*randn(1,N)]; % white gaussian noise, 0dB variance 
+Eb_N0_dB = [-3:10]; % multiple Eb/N0 values
+ 
+for ii = 1:length(Eb_N0_dB)
+   % Noise addition
+   y = s5 + 10^(-Eb_N0_dB(ii)/20)*n; % additive white gaussian noise
+ 
+   % receiver - hard decision decoding
+   ipHat = real(y)>0;
+ 
+   % counting the errors
+   nErr(ii) = size(find([ip- ipHat]),2);
+ 
+end
+ 
+simBer5 = nErr/N; % simulated ber
+ 
+close all
+figure
+semilogy(Eb_N0_dB,theoryBer,'b.-');
+hold on
+semilogy(Eb_N0_dB,simBer,'mx-');
+axis([3 12 10^-5 0.1])
+semilogy(Eb_N0_dB,simBer1,'gx-');
+axis([3 12 10^-5 0.1])
+semilogy(Eb_N0_dB,simBer2,'rx-');
+axis([3 12 10^-5 0.1])
+semilogy(Eb_N0_dB,simBer3,'kx-');
+axis([3 12 10^-5 0.1])
+semilogy(Eb_N0_dB,simBer4,'cx-');
+axis([3 12 10^-5 0.1])
+semilogy(Eb_N0_dB,simBer5,'mx-');
+axis([3 12 10^-5 0.1])
+grid on
+legend('THEORITICAL','BPSK', 'QPSK' ,'8-PSK','16-PSK','32-PSK','64-PSK');
+xlabel('Eb/No, dB');
+ylabel('Bit Error Rate');
+title('Bit error probability curve for M-ary PSK modulation');
