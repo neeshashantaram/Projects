@@ -1,0 +1,84 @@
+//Code for 7 segment display
+
+
+
+#include<reg51.h>
+
+sbit in1=P1^0;				// input pins
+sbit in2=P1^1;
+sbit in3=P1^2;
+sbit in4=P1^3;
+sbit in5=P1^4;
+sbit in6=P1^5;
+sbit in7=P1^6;
+sbit in8=P1^1;
+sbit in9=P1^2;
+sbit ina=P1^3;
+
+
+sbit out1=P2^0;				//output pins
+sbit out2=P2^1;
+sbit out3=P2^2;
+sbit out4=P2^3;
+sbit out5=P2^4;
+sbit out6=P2^5;
+sbit out7=P2^6;
+
+
+void main()
+{
+  in1=in2=in3=in4=in5=in6=in7=in8=in9=ina=1;
+  out1=out2=out3=out4=out5=out6=out7=1;
+  while(1)
+  {
+    while(in1==0)
+	{
+	  out2=out3=0;
+      out1=out4=out5=out6=out7=1;	  
+	}
+	while(in2==0)
+	{
+	  out1=out2=out4=out5=out7=0;
+	  out3=out6=1;
+	}
+	while(in3==0)
+	{
+	 out1=out2=out4=out3=out7=0;
+     out5=out6=1;	 
+	}
+	while(in4==0)
+	{
+	 out3=out2=out6=out7=0;
+	 out1=out4=out5=1;
+	}
+	while(in5==0)
+	{
+	  out1=out3=out4=out6=out7=0;
+	  out2=out5=1;
+	}
+	while(in6==0)
+	{
+	  out1=out5=out3=out4=out6=out7=0;
+	  out2=1;
+	}
+	while(in7==0)
+	{
+	 out1=out3=out2=0;
+	 out4=out5=out6=out7=1;
+	}
+	while(in8==0)
+	{
+	 out1=out2=out5=out3=out4=out6=out7=0;
+	}
+	while(in9==0)
+	{
+	 out1=out2=out3=out4=out6=out7=0;
+	 out5=1;
+	}
+	while(ina==0)
+	{
+	  out1=out3=out4=out6=out2=out5=0;
+	  out7=1;
+	}
+  }
+}
