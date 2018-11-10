@@ -1,4 +1,4 @@
-//Code for 7 segment display
+//Code for 7 segment display in C
 
 
 
